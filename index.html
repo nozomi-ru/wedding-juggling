@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>リフティング最高回数予想クイズ！</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700|M+PLUS+Rounded+1c:500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg,#FDEBEB 0,#F9FDFD 35%,#E0F0F7 100%);
+      min-height:100vh;
+      margin:0; padding:0;
+      color:#353550;
+      font-family: 'M PLUS Rounded 1c', 'Montserrat', Arial, sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    #main-box {
+      width: 95vw;
+      max-width:400px;
+      background:rgba(255,255,255,0.93);
+      border-radius:22px;
+      box-shadow: 0 6px 28px 2px #aac7ea52;
+      padding:2.7em 1.1em 2em 1.1em;
+      text-align:center;
+      position:relative;
+    }
+    .ball {
+      font-size:2.2em;
+      letter-spacing:.18em;
+      margin:-.14em .23em .1em .23em;
+      display:inline-block;
+      transform: rotate(-11deg);
+      filter:drop-shadow(0 4px 10px #58aef6af)
+    }
+    h1 {
+      font-family: "Montserrat", 'M PLUS Rounded 1c',sans-serif;
+      font-size:1.6em;
+      background:linear-gradient(90deg,#36dfda,#467afe 80%);
+      color:transparent;
+      background-clip: text; -webkit-background-clip:text;
+      text-shadow: 0 2px 22px #a0cfc637;
+      font-weight:800;
+      margin:0.6em 0 0.18em 0;
+      letter-spacing:0.02em;
+    }
+    .subtitle {
+      font-size:1.05em; color:#4d5ae8;
+      margin-bottom:0.95em;
+      font-weight:700;
+      letter-spacing:.05em
+    }
+    .rule-box {
+      background: #fff5f8;
+      border-radius: 12px;
+      padding: 12px;
+      margin: 15px 0;
+      font-size: 0.88em;
+      text-align: left;
+      color: #556;
+      border: 2px solid #ffdae9;
+    }
+    .rule-box strong { color: #e24a76; }
+    .rule-box ul { margin: 5px 0; padding-left: 1.5em; }
+    .rule-box li { margin-bottom: 3px; }
+
+    label {
+      font-weight:bold; font-size:1.05em; color:#4a3957;
+      display:block; margin:.8em auto .3em auto;
+    }
+    input[type=number] {
+      font-size:2.2em; text-align:center;
+      border:none; border-radius:12px;
+      padding: .2em .4em;
+      margin: .2em 0 1.2em 0;
+      color:#255;
+      width:6.5em;
+      font-family:"Montserrat",sans-serif;
+      background:#f9fdff;
+      box-shadow:0 2px 12px 1px #cbe9ff7d;
+      outline:none;
+    }
+    input[type=number]:focus {
+      background: #eefbdf;
+      border:2.5px solid #b0eed9;
+    }
+    button[type=submit] {
+      font-size:1.2em;
+      padding:.6em 2.2em;
+      background:linear-gradient(90deg,#fda5b4 0%,#60cbfd 100%);
+      border:none; border-radius:2em;
+      font-weight:600; color: #fff;
+      cursor:pointer;
+      transition:.2s;
+    }
+    button[type=submit]:active { transform: scale(0.96); }
+
+    /* 結果表示エリア */
+    #result-box {
+      display:none;
+      margin-top: 20px;
+      animation: zoomIn 0.4s ease-out;
+    }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+    .your-num-label { color:#1675b6; font-size:1.25em; font-weight:bold; }
+    .your-number {
+      font-family:"Montserrat", sans-serif;
+      color:#FF43B4;
+      font-weight:900;
+      font-size:5.5em;
+      line-height: 1;
+      margin: 15px 0;
+      text-shadow: 0 4px 15px rgba(255, 67, 180, 0.2);
+    }
+    .unit { font-size: 0.35em; margin-left: 4px; vertical-align: baseline; }
+    .memohint {
+      font-size:1.05em; color:#A579E8; line-height:1.6; font-weight: bold;
+    }
+    .copyright { font-size:.85em; color:#c1cbe5; margin-top:2.5em; }
+
+    @media(max-width:512px){
+      #main-box{padding:1.5em 0.8em;}
+      h1{font-size:1.35em;}
+      .your-number{font-size:4.5em;}
+    }
+  </style>
+</head>
+<body>
+  <div id="main-box">
+    <div class="ball">⚽</div>
+    <h1>リフティング予想クイズ！</h1>
+    <div class="subtitle">✨ 新郎・望の限界突破チャレンジ ✨</div>
+
+    <!-- フォーム -->
+    <form id="game-form" autocomplete="off">
+      <div class="rule-box">
+        <strong>【ガチンコ・ルール】</strong>
+        <ul>
+          <li>制限時間は<strong>30秒間</strong></li>
+          <li><strong>落としたら「1」から数え直し！</strong></li>
+          <li>時間内の<strong>「最高連続回数」</strong>が記録です</li>
+        </ul>
+      </div>
+
+      <label for="predict">最高で「連続」何回できる？<br>
+        <small style="color:#ec82a7;">※各テーブルで相談して入力！</small>
+      </label>
+      
+      <input type="number" id="predict" min="0" max="150" required placeholder="数字を入力" inputmode="numeric">
+      <br>
+      <button type="submit">予想を決定！<span class="ball">⚽</span></button>
+      
+      <div style="color:#e24a76;font-size: 0.85em;margin-top:1.5em;font-weight:bold;">
+        ※ 送信後は修正できません
+      </div>
+    </form>
+
+    <!-- 決定後の表示 -->
+    <div id="result-box">
+      <div style="font-size:2.5em; margin-bottom:10px;">🎉✨⚽💒</div>
+      <div class="your-num-label">当テーブルの予想回数</div>
+      <div class="your-number">
+        <span id="your-num">--</span><span class="unit">回</span>
+      </div>
+      <div class="memohint">
+        新郎の意地を見届けよう！<br>
+        この画面を掲げて応援してください✨
+      </div>
+    </div>
+
+    <div class="copyright">Designed for Wedding Party ⚽</div>
+  </div>
+
+  <script>
+    // ルール変更に伴いキーを更新
+    const VOTE_KEY = "wedding_lifting_v4_consecutive";
+
+    function updateView() {
+      const savedValue = localStorage.getItem(VOTE_KEY);
+      const form = document.getElementById("game-form");
+      const resultBox = document.getElementById("result-box");
+      const displayNum = document.getElementById("your-num");
+
+      if (savedValue !== null) {
+        form.style.display = "none";
+        resultBox.style.display = "block";
+        displayNum.textContent = savedValue;
+      } else {
+        form.style.display = "block";
+        resultBox.style.display = "none";
+      }
+    }
+
+    document.getElementById("game-form").onsubmit = function(e) {
+      e.preventDefault();
+      const val = document.getElementById("predict").value;
+
+      if (!confirm(`最高連続「${val}回」で決定しますか？\n送信後は修正できません。`)) {
+        return;
+      }
+
+      localStorage.setItem(VOTE_KEY, val);
+      updateView();
+    };
+
+    updateView();
+  </script>
+</body>
+</html>
