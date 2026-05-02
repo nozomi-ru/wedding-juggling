@@ -2,63 +2,275 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>リフティング最高回数予想</title>
+  <title>リフティング最高回数予想フォーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts: M PLUS Rounded 1c -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:wght@500;700&display=swap">
   <style>
-    body { font-family: sans-serif; background: #f7f7f7; text-align: center; }
-    #main-box { background: #fff; padding:30px; margin:50px auto; border-radius:18px; box-shadow:0 4px 18px #bbb; max-width:350px;}
-    input, button { font-size:1.15em; margin:.9em 0;}
-    #result-box { margin-top:2em; font-size:1.3em; color:#1675b6;}
+    body {
+      background: linear-gradient(135deg, #FFF3F0 0%, #F4F9FF 60%, #E0F7FF 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      color: #364465;
+      font-family: 'M PLUS Rounded 1c', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #main-box {
+      max-width: 370px;
+      width: 93vw;
+      background: #fff;
+      border-radius: 26px;
+      box-shadow: 0 6px 32px 6px #cce2f355;
+      padding: 2.8em 1.3em 2em 1.3em;
+      text-align: center;
+      position: relative;
+      border: 2.8px solid #ffe2f0;
+    }
+    .ball {
+      font-size: 2.7em;
+      position: absolute;
+      left: 1.3em;
+      top: 0.7em;
+      animation: bounce 1.5s cubic-bezier(.22,.68,.57,1) infinite alternate;
+      user-select: none;
+    }
+    @keyframes bounce {
+      0% { transform: rotate(-12deg) scale(1);}
+      100% { transform: rotate(14deg) scale(1.13);}
+    }
+    h2 {
+      font-family: 'M PLUS Rounded 1c', Arial, sans-serif;
+      font-size: 1.65em;
+      margin: 0.7em 0 0.22em 0;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      background: linear-gradient(90deg,#59dbeb,#FF6CA4 70%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 18px #febfc67d;
+    }
+    .subtitle {
+      font-size: 1.05em;
+      color: #7f61cb;
+      margin-bottom: 1.2em;
+      font-weight: bold;
+      letter-spacing: .05em;
+    }
+    label {
+      font-size: 1.08em;
+      color: #635781;
+      font-weight: bold;
+      margin: 1.1em 0 0.35em 0;
+      display: block;
+      text-align: left;
+      letter-spacing: 0.02em;
+    }
+    input[type=text], input[type=number] {
+      font-size: 1.18em;
+      border-radius: 14px;
+      width: 90%;
+      max-width: 250px;
+      border: 2px solid #e4e6f7;
+      background: #f7f2ff;
+      box-shadow: 0 2px 12px #ffe3f420;
+      padding: .45em .7em;
+      margin-bottom: 1.4em;
+      color: #615574;
+      font-family: inherit;
+      transition: border .16s, box-shadow .16s;
+    }
+    input[type=number]:focus, input[type=text]:focus {
+      border: 2.2px solid #ffc1e9;
+      background: #fdf8ff;
+      outline: none;
+      box-shadow: 0 1px 10px #ffaacc30;
+    }
+    button[type=submit] {
+      font-size: 1.22em;
+      padding: .65em 2em;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(90deg,#fd96bd 0%,#62e3fe 100%);
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 1.3em;
+      transition: all .19s;
+      box-shadow: 0 5px 15px #ffdef2b8;
+      letter-spacing: 0.06em;
+      text-shadow: 0 2px 18px #79bee07d;
+    }
+    button[type=submit]:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 8px #ffdef299;
+      background: linear-gradient(90deg,#62e3fe 0%,#fd96bd 100%);
+    }
+    button[type=submit][disabled] {
+      filter: grayscale(0.5);
+      opacity: 0.6;
+      pointer-events: none;
+      cursor: default;
+      background: linear-gradient(90deg,#cfd9df 0%,#e2ebf0 100%);
+    }
+    #result-box {
+      display: none;
+      margin-top: 25px;
+      animation: zoomIn .5s ease;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .your-number {
+      font-family: inherit;
+      color: #FF43B4;
+      font-weight: 900;
+      font-size: 4.1em;
+      margin: 10px 0 6px 0;
+      text-shadow: 0 4px 15px rgba(255, 67, 180, 0.12);
+    }
+    .unit {
+      font-size: 0.34em;
+      margin-left: 6px;
+      vertical-align: baseline;
+      color: #6cadff;
+    }
+    #error-box {
+      color: #FF43B4;
+      background: #ffe8ee;
+      border-radius: 9px;
+      padding: 0.6em 1em;
+      margin: 1em 0 1.5em 0;
+      display: none;
+      font-size: 1em;
+      font-weight: bold;
+      box-shadow: 0 1px 8px #ffaad410;
+    }
+    .copyright {
+      font-size: .98em;
+      color: #bba9ed;
+      margin-top: 2.6em;
+      letter-spacing: 0.04em;
+      font-weight: 500;
+      user-select: none;
+    }
+    @media(max-width: 550px) {
+      #main-box {padding: 1.2em 0.4em;}
+      .your-number {font-size: 2.3em;}
+      h2 {font-size:1.1em;}
+    }
   </style>
 </head>
 <body>
   <div id="main-box">
-    <h2>リフティング最高回数予想</h2>
+    <div class="ball">⚽</div>
+    <h2>リフティング<br>最高回数予想</h2>
+    <div class="subtitle">✨ 新郎・望の限界チャレンジ ✨</div>
+
     <form id="game-form" autocomplete="off">
-      <label for="user_name">記入者の名前</label><br>
-      <input type="text" id="user_name" required placeholder="お名前を入力"><br>
-      <label for="predict">最高で「連続」何回できる？</label><br>
-      <input type="number" id="predict" min="0" max="150" required placeholder="回数を入力"><br>
-      <button type="submit">送信</button>
+      <label for="user_name">記入者の名前</label>
+      <input type="text" id="user_name" required placeholder="お名前を入力">
+
+      <label for="predict">最高で「連続」何回できる？</label>
+      <input type="number" id="predict" min="0" max="150" required placeholder="回数を入力">
+
+      <button type="submit" id="submit-btn">送信する ✨</button>
+      <div id="error-box"></div>
     </form>
-    <div id="result-box" style="display:none"></div>
+    <div id="result-box">
+      <div style="font-size:2.2em; color:#64eef9; margin-bottom:7px;">🎉⚽💒✨</div>
+      <div style="color:#8d6df5; font-size:1.1em;">当テーブルの予想回数</div>
+      <div class="your-number">
+        <span id="your-num">--</span><span class="unit">回</span>
+      </div>
+      <div style="font-size:1.1em; color:#e493b3; line-height:1.7; font-weight: bold;">
+        新郎の意地を見届けよう！<br>
+        この画面を掲げて応援してね✨
+      </div>
+    </div>
+    <div class="copyright">Designed for Wedding Party ⚽</div>
   </div>
   <script>
-    // フォーム送信＆表示制御
-    function updateView(val, name) {
-      document.getElementById('game-form').style.display = 'none';
-      document.getElementById('result-box').style.display = 'block';
-      document.getElementById('result-box').innerHTML =
-        `記録しました！<br>【${name}】の予想：<b>${val}回</b><br>（Google シートに自動集計済み）`;
-    }
-    document.getElementById("game-form").onsubmit = async function(e) {
-      e.preventDefault();
-      const name = document.getElementById("user_name").value;
-      const predict = document.getElementById("predict").value;
+    // SheetDB設定
+    const API_URL = "https://sheetdb.io/api/v1/wtkkjfxa0n81f";
+    const FIELD_NAME = "名前";
+    const FIELD_PREDICT = "予想回数";
+    const FIELD_TIMESTAMP = "タイムスタンプ";
 
-      if (!name.trim() || !predict.trim()) {
-        alert("両方入力してください！");
+    // フォーム送信
+    async function submitForm(e) {
+      e.preventDefault();
+      hideError();
+      disableButton(true);
+
+      const name = document.getElementById("user_name").value.trim();
+      const predict = document.getElementById("predict").value.trim();
+      if (!name || !predict || isNaN(Number(predict))) {
+        showError("両方正しく入力してください（回数は数字で）");
+        disableButton(false);
         return;
       }
 
-      // ▼ここ↓をあなたのApps ScriptデプロイURLに差し替えてください！
-      const API_URL = "https://script.google.com/macros/s/AKfycbyr1KkGnM10m8IXcwtFBHe_NUA2una-35VL1kGHN-nw-Db2dLTn8Q6tM2LhfUuCuz66/exec";
+      const data = [{
+        [FIELD_NAME]: name,
+        [FIELD_PREDICT]: predict,
+        [FIELD_TIMESTAMP]: new Date().toLocaleString("ja-JP")
+      }];
 
       try {
         const resp = await fetch(API_URL, {
           method: "POST",
-          body: JSON.stringify({ name, predict }),
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
         });
-        const text = await resp.text();
-        if (text.startsWith("OK")) {
-          updateView(predict, name);
+        const respBody = await resp.text();
+        console.log("SheetDB返答:", resp.status, respBody);
+
+        if (resp.ok) {
+          showResult(predict);
+          // 成功時は再有効化不要（フォーム自体を非表示にする）
         } else {
-          alert("送信失敗: " + text);
+          showError("送信失敗: " + resp.status + "<br>(詳細: " + respBody + ")");
+          disableButton(false);
         }
       } catch (err) {
-        alert("ネットワークエラー: " + err.message);
+        showError("ネットワークエラー: " + err.message);
+        console.error("送信失敗(詳細):", err);
+        disableButton(false);
       }
-    };
+    }
+
+    // 結果表示
+    function showResult(predict) {
+      document.getElementById('game-form').style.display = 'none';
+      document.getElementById('result-box').style.display = 'block';
+      document.getElementById('your-num').textContent = predict;
+    }
+
+    // エラー表示
+    function showError(msg) {
+      const err = document.getElementById('error-box');
+      err.style.display = 'block';
+      err.innerHTML = `⚠️ ${msg}`;
+    }
+    function hideError() {
+      const err = document.getElementById('error-box');
+      err.style.display = 'none';
+      err.textContent = '';
+    }
+    function disableButton(flag) {
+      const btn = document.getElementById("submit-btn");
+      btn.disabled = !!flag;
+      btn.style.opacity = flag ? "0.6" : "";
+      btn.style.pointerEvents = flag ? "none" : "";
+      btn.textContent = flag ? "送信中…" : "送信する ✨";
+    }
+
+    document.getElementById("game-form").addEventListener("submit", submitForm);
   </script>
 </body>
 </html>
