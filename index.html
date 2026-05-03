@@ -2,221 +2,429 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>リフティング最高回数予想フォーム</title>
+  <title>Lifting Challenge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Google Fonts: M PLUS Rounded 1c -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:wght@500;700&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --color-bg: #FCFBF9;
+      --color-text: #2B2B2B;
+      --color-gold: #BCA371;
+      --color-border: #E8E4DF;
+    }
+
     body {
-      background: linear-gradient(135deg, #FFF3F0 0%, #F4F9FF 60%, #E0F7FF 100%);
-      min-height: 100vh;
+      font-family: 'Noto Serif JP', 'Yu Mincho', '游明朝', serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
       margin: 0;
-      padding: 0;
-      color: #364465;
-      font-family: 'M PLUS Rounded 1c', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    #main-box {
+      max-width: 440px;
+      width: 92vw;
+      margin: 40px 0;
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+      padding: 3.5em 2em;
+      text-align: center;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    #main-box::before {
+      content: '';
+      position: absolute;
+      top: 6px; left: 6px; right: 6px; bottom: 6px;
+      border: 1px solid #F4F1EC;
+      pointer-events: none;
+    }
+
+    .header-ornament {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-bottom: 12px;
     }
-    #main-box {
-      max-width: 370px;
-      width: 93vw;
-      background: #fff;
-      border-radius: 26px;
-      box-shadow: 0 6px 32px 6px #cce2f355;
-      padding: 2.8em 1.3em 2em 1.3em;
-      text-align: center;
-      position: relative;
-      border: 2.8px solid #ffe2f0;
+    
+    .header-ornament::before,
+    .header-ornament::after {
+      content: '';
+      width: 25px;
+      height: 1px;
+      background-color: var(--color-gold);
+      margin: 0 12px;
     }
-    .ball {
-      font-size: 2.7em;
-      position: absolute;
-      left: 1.3em;
-      top: 0.7em;
-      animation: bounce 1.5s cubic-bezier(.22,.68,.57,1) infinite alternate;
-      user-select: none;
+
+    .header-ornament svg {
+      width: 10px;
+      height: 10px;
+      fill: var(--color-gold);
     }
-    @keyframes bounce {
-      0% { transform: rotate(-12deg) scale(1);}
-      100% { transform: rotate(14deg) scale(1.13);}
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6em;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      margin: 0 0 8px 0;
+      color: var(--color-text);
+      text-transform: uppercase;
     }
-    h2 {
-      font-family: 'M PLUS Rounded 1c', Arial, sans-serif;
-      font-size: 1.65em;
-      margin: 0.7em 0 0.22em 0;
-      letter-spacing: 0.04em;
-      font-weight: 700;
-      background: linear-gradient(90deg,#59dbeb,#FF6CA4 70%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 2px 18px #febfc67d;
+
+    .ja-title {
+      font-size: 0.8em;
+      color: #777;
+      letter-spacing: 0.25em;
+      margin-bottom: 4em;
+      font-weight: 300;
     }
-    .subtitle {
-      font-size: 1.05em;
-      color: #7f61cb;
-      margin-bottom: 1.2em;
-      font-weight: bold;
-      letter-spacing: .05em;
-    }
-    label {
-      font-size: 1.08em;
-      color: #635781;
-      font-weight: bold;
-      margin: 1.1em 0 0.35em 0;
-      display: block;
+
+    .input-group {
+      margin-bottom: 2.5em;
       text-align: left;
-      letter-spacing: 0.02em;
     }
-    input[type=text], input[type=number] {
-      font-size: 1.18em;
-      border-radius: 14px;
-      width: 90%;
-      max-width: 250px;
-      border: 2px solid #e4e6f7;
-      background: #f7f2ff;
-      box-shadow: 0 2px 12px #ffe3f420;
-      padding: .45em .7em;
-      margin-bottom: 1.4em;
-      color: #615574;
+
+    label {
+      display: block;
+      font-size: 0.85em;
+      color: #666;
+      margin-bottom: 0.8em;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    select, input[type=number] {
+      width: 100%;
+      font-size: 1.1em;
+      padding: 0.7em 0;
+      border: 1px solid var(--color-border);
+      background: #FAF9F7;
+      color: var(--color-text);
+      text-align: center;
       font-family: inherit;
-      transition: border .16s, box-shadow .16s;
+      transition: all 0.4s ease;
+      border-radius: 0;
+      appearance: none;
+      box-sizing: border-box;
     }
-    input[type=number]:focus, input[type=text]:focus {
-      border: 2.2px solid #ffc1e9;
-      background: #fdf8ff;
-      outline: none;
-      box-shadow: 0 1px 10px #ffaacc30;
-    }
-    button[type=submit] {
-      font-size: 1.22em;
-      padding: .65em 2em;
-      border: none;
-      border-radius: 25px;
-      background: linear-gradient(90deg,#fd96bd 0%,#62e3fe 100%);
-      font-weight: 700;
-      color: #fff;
+
+    select {
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2210%22%20height%3D%226%22%20viewBox%3D%220%200%2010%206%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1%201L5%205L9%201%22%20stroke%3D%22%23BCA371%22%20stroke-width%3D%221.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: right 15px center;
       cursor: pointer;
-      margin-top: 1.3em;
-      transition: all .19s;
-      box-shadow: 0 5px 15px #ffdef2b8;
-      letter-spacing: 0.06em;
-      text-shadow: 0 2px 18px #79bee07d;
     }
-    button[type=submit]:active {
-      transform: scale(0.97);
-      box-shadow: 0 3px 8px #ffdef299;
-      background: linear-gradient(90deg,#62e3fe 0%,#fd96bd 100%);
+
+    select:focus, input[type=number]:focus {
+      outline: none;
+      border-color: var(--color-gold);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 1px var(--color-gold) inset;
     }
+    
+    input[type=number]::placeholder {
+      color: #D2D2D2;
+      font-family: 'Playfair Display', serif;
+    }
+
+    button[type=submit] {
+      background-color: var(--color-text);
+      color: #FFFFFF;
+      font-family: 'Playfair Display', 'Noto Serif JP', serif;
+      border: 1px solid var(--color-text);
+      border-radius: 0;
+      padding: 1em 0;
+      width: 100%;
+      font-size: 0.95em;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: all 0.5s ease;
+      margin-top: 1.5em;
+      text-indent: 0.2em;
+    }
+
+    button[type=submit]:hover {
+      background-color: #FFFFFF;
+      color: var(--color-text);
+    }
+    
     button[type=submit][disabled] {
-      filter: grayscale(0.5);
-      opacity: 0.6;
-      pointer-events: none;
-      cursor: default;
-      background: linear-gradient(90deg,#cfd9df 0%,#e2ebf0 100%);
+      background-color: #E8E4DF;
+      border-color: #E8E4DF;
+      color: #999;
+      cursor: not-allowed;
     }
+    
+    #error-box {
+      color: #9E3A3A;
+      background: #FDF9F9;
+      border: 1px solid #EAD8D8;
+      padding: 0.8em 1em;
+      margin: 1.5em 0 0 0;
+      display: none;
+      font-size: 0.85em;
+      text-align: left;
+    }
+
     #result-box {
       display: none;
-      margin-top: 25px;
-      animation: zoomIn .5s ease;
+      animation: fadeIn 1s ease forwards;
     }
-    @keyframes zoomIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to   { opacity: 1; transform: scale(1); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+    
+    .result-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--color-gold);
+      font-size: 1.2em;
+      letter-spacing: 0.15em;
+      margin-bottom: 2em;
+    }
+
     .your-number {
-      font-family: inherit;
-      color: #FF43B4;
-      font-weight: 900;
-      font-size: 4.1em;
-      margin: 10px 0 6px 0;
-      text-shadow: 0 4px 15px rgba(255, 67, 180, 0.12);
+      font-family: 'Playfair Display', serif;
+      color: var(--color-text);
+      font-size: 4em;
+      margin: 10px 0;
+      line-height: 1;
+      border-bottom: 1px solid var(--color-gold);
+      display: inline-block;
+      padding: 0 10px 5px 10px;
     }
+
     .unit {
-      font-size: 0.34em;
+      font-size: 0.25em;
+      font-family: 'Noto Serif JP', serif;
+      color: #666;
+      vertical-align: middle;
       margin-left: 6px;
-      vertical-align: baseline;
-      color: #6cadff;
     }
-    #error-box {
-      color: #FF43B4;
-      background: #ffe8ee;
-      border-radius: 9px;
-      padding: 0.6em 1em;
-      margin: 1em 0 1.5em 0;
+
+    .cheer-text {
+      font-size: 0.85em;
+      color: #777;
+      line-height: 2;
+      margin-top: 2.5em;
+      letter-spacing: 0.1em;
+    }
+    
+    hr { 
+      border: none; 
+      border-top: 1px solid var(--color-border); 
+      margin: 3.5em 0;
+    }
+    
+    #vote-results-section {
       display: none;
-      font-size: 1em;
-      font-weight: bold;
-      box-shadow: 0 1px 8px #ffaad410;
     }
-    .copyright {
-      font-size: .98em;
-      color: #bba9ed;
-      margin-top: 2.6em;
-      letter-spacing: 0.04em;
-      font-weight: 500;
-      user-select: none;
+    
+    .section-title {
+      font-family: 'Playfair Display', 'Noto Serif JP', serif;
+      font-size: 1.05em;
+      color: var(--color-text);
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5em;
     }
-    @media(max-width: 550px) {
-      #main-box {padding: 1.2em 0.4em;}
-      .your-number {font-size: 2.3em;}
-      h2 {font-size:1.1em;}
+
+    #table-box {
+      overflow-x: auto;
+      margin-bottom: 2em;
+    }
+
+    table { 
+      width: 100%;
+      border-collapse: collapse; 
+      margin: 0 auto; 
+    }
+
+    th, td { 
+      padding: 1.2em 0.5em; 
+      text-align: center;
+    }
+
+    th { 
+      font-family: 'Playfair Display', serif;
+      color: var(--color-gold); 
+      font-size: 0.75em; 
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--color-gold);
+    }
+
+    td { 
+      color: var(--color-text); 
+      font-size: 0.9em;
+      border-bottom: 1px dashed var(--color-border);
+    }
+
+    .highlight-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3em;
+    }
+
+    #loading {
+      font-family: 'Playfair Display', serif;
+      color: #999;
+      font-style: italic;
+      font-size: 0.9em;
+      margin: 2em 0;
+      letter-spacing: 0.1em;
+    }
+
+    #error-box2 {
+      color: #9E3A3A;
+      font-size: 0.85em;
+      margin: 1em 0;
+      display: none;
+    }
+
+    .footer-text {
+      font-size: 0.65em;
+      color: #CCC;
+      letter-spacing: 0.1em;
+      font-family: 'Playfair Display', serif;
     }
   </style>
 </head>
 <body>
   <div id="main-box">
-    <div class="ball">⚽</div>
-    <h2>リフティング<br>最高回数予想</h2>
-    <div class="subtitle">✨ 新郎・望の限界チャレンジ ✨</div>
 
+    <!-- ===== 新しいタイトル部 ===== -->
+    <div class="header-ornament">
+      <svg viewBox="0 0 24 24"><path d="M12 2L22 12L12 22L2 12L12 2Z"/></svg>
+    </div>
+    <h1>Lifting Challenge</h1>
+    <div class="ja-title">リフティング回数予想</div>
+    
     <form id="game-form" autocomplete="off">
-      <label for="user_name">記入者の名前</label>
-      <input type="text" id="user_name" required placeholder="お名前を入力">
-
-      <label for="predict">最高で「連続」何回できる？</label>
-      <input type="number" id="predict" min="0" max="150" required placeholder="回数を入力">
-
-      <button type="submit" id="submit-btn">送信する ✨</button>
+      <div class="input-group">
+        <label for="user_name">テーブル</label>
+        <select id="user_name" required>
+          <option value="" disabled selected>選択してください</option>
+          <option value="A">Table A</option>
+          <option value="B">Table B</option>
+          <option value="C">Table C</option>
+          <option value="D">Table D</option>
+          <option value="E">Table E</option>
+          <option value="F">Table F</option>
+          <option value="G">Table G</option>
+          <option value="H">Table H</option>
+          <option value="I">Table I</option>
+          <option value="J">Table J</option>
+        </select>
+      </div>
+      
+      <div class="input-group">
+        <label for="predict">予想回数</label>
+        <input type="number" id="predict" min="0" max="150" required placeholder="0">
+      </div>
+      
+      <button type="submit" id="submit-btn">SUBMIT</button>
       <div id="error-box"></div>
     </form>
+
+    <!-- ===== 投票完了・結果部 ===== -->
     <div id="result-box">
-      <div style="font-size:2.2em; color:#64eef9; margin-bottom:7px;">🎉⚽💒✨</div>
-      <div style="color:#8d6df5; font-size:1.1em;">当テーブルの予想回数</div>
+      <div class="result-title">Thank You</div>
+      <div style="font-size:0.85em; color:#666; margin-bottom:1.5em; letter-spacing:0.1em;">
+        <span id="your-table-name" style="color:var(--color-text);"></span> の予想
+      </div>
       <div class="your-number">
         <span id="your-num">--</span><span class="unit">回</span>
       </div>
-      <div style="font-size:1.1em; color:#e493b3; line-height:1.7; font-weight: bold;">
-        新郎の意地を見届けよう！<br>
-        この画面を掲げて応援してね✨
+      <div class="cheer-text">
+        ご投票ありがとうございました。<br>
+        結果発表までしばらくお待ちください。
       </div>
     </div>
-    <div class="copyright">Designed for Wedding Party ⚽</div>
+    
+    <hr>
+
+    <!-- ===== みんなの予想一覧 ===== -->
+    <div id="vote-results-section">
+      <div class="section-title">Guests' Prediction</div>
+      <div id="loading">Loading...</div>
+      <div id="error-box2"></div>
+      <div id="table-box"></div>
+      <div class="footer-text">Powered by Google Sheets & SheetDB</div>
+    </div>
+
   </div>
+
   <script>
-    // SheetDB設定
     const API_URL = "https://sheetdb.io/api/v1/wtkkjfxa0n81f";
     const FIELD_NAME = "名前";
     const FIELD_PREDICT = "予想回数";
     const FIELD_TIMESTAMP = "タイムスタンプ";
+    const STORAGE_KEY = "lifting_quiz_v2";
 
-    // フォーム送信
-    async function submitForm(e) {
+    const els = {
+      form: document.getElementById("game-form"),
+      userNameSelect: document.getElementById("user_name"),
+      predictInput: document.getElementById("predict"),
+      submitBtn: document.getElementById("submit-btn"),
+      errBox: document.getElementById("error-box"),
+      resultBox: document.getElementById("result-box"),
+      yourTableName: document.getElementById("your-table-name"),
+      yourNum: document.getElementById("your-num"),
+      voteSection: document.getElementById("vote-results-section"),
+      tableBox: document.getElementById("table-box"),
+      loading: document.getElementById("loading"),
+      errBox2: document.getElementById("error-box2")
+    };
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        try {
+          const { predict, tableName } = JSON.parse(savedData);
+          showResult(predict, tableName);
+          showVoteResults();
+          loadVotes();
+        } catch (e) {
+          console.warn("Storage parse error", e);
+        }
+      }
+    });
+
+    els.form.addEventListener("submit", async (e) => {
       e.preventDefault();
       hideError();
       disableButton(true);
 
-      const name = document.getElementById("user_name").value.trim();
-      const predict = document.getElementById("predict").value.trim();
-      if (!name || !predict || isNaN(Number(predict))) {
-        showError("両方正しく入力してください（回数は数字で）");
+      const sel = els.userNameSelect;
+      const tableName = sel.options[sel.selectedIndex].text;
+      const predict = els.predictInput.value.trim();
+
+      if (!sel.value || !predict || isNaN(Number(predict))) {
+        showError("正しく入力・選択してください。");
         disableButton(false);
         return;
       }
 
+      // --- 確認アラートの追加 ---
+      const confirmMessage = `【 ${tableName} 】\n予想回数： ${predict} 回\n\nご投票後は内容の変更ができません。\nこの内容で送信してよろしいですか？`;
+      if (!window.confirm(confirmMessage)) {
+        // キャンセルされた場合はボタンを元に戻して処理を中断
+        disableButton(false);
+        return;
+      }
+      // --------------------------
+
       const data = [{
-        [FIELD_NAME]: name,
+        [FIELD_NAME]: tableName,
         [FIELD_PREDICT]: predict,
         [FIELD_TIMESTAMP]: new Date().toLocaleString("ja-JP")
       }];
@@ -224,53 +432,104 @@
       try {
         const resp = await fetch(API_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {"Content-Type": "application/json"},
           body: JSON.stringify(data)
         });
-        const respBody = await resp.text();
-        console.log("SheetDB返答:", resp.status, respBody);
 
         if (resp.ok) {
-          showResult(predict);
-          // 成功時は再有効化不要（フォーム自体を非表示にする）
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ predict, tableName }));
+          showResult(predict, tableName);
+          showVoteResults();
+          loadVotes();
         } else {
-          showError("送信失敗: " + resp.status + "<br>(詳細: " + respBody + ")");
+          showError(`通信エラーが発生しました (${resp.status})`);
           disableButton(false);
         }
       } catch (err) {
-        showError("ネットワークエラー: " + err.message);
-        console.error("送信失敗(詳細):", err);
+        showError(`ネットワークエラー: ${err.message}`);
         disableButton(false);
       }
+    });
+
+    function showResult(predict, tableName) {
+      els.form.style.display = 'none';
+      els.resultBox.style.display = 'block';
+      els.yourTableName.textContent = tableName || "あなた";
+      els.yourNum.textContent = predict;
     }
 
-    // 結果表示
-    function showResult(predict) {
-      document.getElementById('game-form').style.display = 'none';
-      document.getElementById('result-box').style.display = 'block';
-      document.getElementById('your-num').textContent = predict;
-    }
-
-    // エラー表示
     function showError(msg) {
-      const err = document.getElementById('error-box');
-      err.style.display = 'block';
-      err.innerHTML = `⚠️ ${msg}`;
-    }
-    function hideError() {
-      const err = document.getElementById('error-box');
-      err.style.display = 'none';
-      err.textContent = '';
-    }
-    function disableButton(flag) {
-      const btn = document.getElementById("submit-btn");
-      btn.disabled = !!flag;
-      btn.style.opacity = flag ? "0.6" : "";
-      btn.style.pointerEvents = flag ? "none" : "";
-      btn.textContent = flag ? "送信中…" : "送信する ✨";
+      els.errBox.style.display = 'block';
+      els.errBox.textContent = msg;
     }
 
-    document.getElementById("game-form").addEventListener("submit", submitForm);
+    function hideError() {
+      els.errBox.style.display = 'none';
+      els.errBox.textContent = '';
+    }
+
+    function disableButton(flag) {
+      els.submitBtn.disabled = !!flag;
+      els.submitBtn.textContent = flag ? "SENDING..." : "SUBMIT";
+    }
+
+    function showVoteResults() {
+      els.voteSection.style.display = 'block';
+    }
+
+    function escapeHTML(str) {
+      return String(str).replace(/[&<>"'`]/g, s => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;', '`': '&#x60;'
+      }[s]));
+    }
+
+    async function loadVotes() {
+      els.loading.style.display = "block";
+      els.errBox2.style.display = "none";
+      els.tableBox.innerHTML = "";
+
+      try {
+        const resp = await fetch(API_URL);
+        if (!resp.ok) throw new Error(`API Error ${resp.status}`);
+        const data = await resp.json();
+
+        els.loading.style.display = "none";
+        
+        if (!Array.isArray(data) || data.length === 0) {
+          els.tableBox.innerHTML = "<div style='color:#999; font-size:0.85em;'>まだデータがありません</div>";
+          return;
+        }
+
+        data.sort((a, b) => {
+          const dateA = new Date(a[FIELD_TIMESTAMP] || 0).getTime();
+          const dateB = new Date(b[FIELD_TIMESTAMP] || 0).getTime();
+          return dateB - dateA;
+        });
+
+        let html = `<table>
+          <tr>
+            <th>TABLE</th>
+            <th>PREDICT</th>
+            <th>TIME</th>
+          </tr>`;
+          
+        html += data.map(v =>
+          `<tr>
+             <td style="font-family:'Playfair Display', serif;">${escapeHTML((v[FIELD_NAME]||"").replace("Table ",""))}</td>
+             <td class="highlight-number">${escapeHTML(v[FIELD_PREDICT]||"-")}</td>
+             <td style="font-size:0.75em; color:#999; font-family:'Playfair Display', serif;">${(v[FIELD_TIMESTAMP]||"").replace("T"," ").replace(/:\d\d(\.\d+)?Z?$/,"")}</td>
+           </tr>`
+        ).join('');
+        html += "</table>";
+        
+        els.tableBox.innerHTML = html;
+
+      } catch(e) {
+        els.loading.style.display = "none";
+        els.errBox2.style.display = "block";
+        els.errBox2.textContent = `エラー：${e.message}`;
+      }
+    }
   </script>
 </body>
 </html>
